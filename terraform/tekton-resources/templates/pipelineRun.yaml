@@ -19,5 +19,6 @@ spec:
   # serviceAccountName: pipeline-account
   workspaces:
     - name: git-source
-      persistentVolumeClaim:
-        claimName: trainsched-source-pvc
+      emptyDir: {} 
+      # persistentVolumeClaim:
+      #   claimName: trainsched-source-pvc
