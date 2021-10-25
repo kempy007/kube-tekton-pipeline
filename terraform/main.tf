@@ -66,11 +66,35 @@ resource "helm_release" "tekton" {
 */
 
 resource "helm_release" "tekton-resources" {
-  name       = "tekton-resource"
+  name       = "tekton-resources"
   namespace  = var.kubernetes_namespace_tkn
   repository = "./tekton-resources"
   chart      = ""
   depends_on = [var.helm_depends_on, helm_release.tekton ]
+}
+
+/** 
+* helm-tekton-resources-pipelines
+*/
+
+resource "helm_release" "tekton-resources-pipelines" {
+  name       = "tekton-resource-pipelines"
+  namespace  = var.kubernetes_namespace_tkn
+  repository = "./tekton-resources-pipelines"
+  chart      = ""
+  depends_on = [var.helm_depends_on, helm_release.tekton,  helm_release.tekton-resources]
+}
+
+/** 
+* helm-tekton-resources-pipelines-runs
+*/
+
+resource "helm_release" "tekton-resources-pipelines-runs" {
+  name       = "tekton-resource-pipelines-runs"
+  namespace  = var.kubernetes_namespace_tkn
+  repository = "./tekton-resources-pipelines-runs"
+  chart      = ""
+  depends_on = [var.helm_depends_on, helm_release.tekton, helm_release.tekton-resources , helm_release.tekton-resources-pipelines ]
 }
 
 

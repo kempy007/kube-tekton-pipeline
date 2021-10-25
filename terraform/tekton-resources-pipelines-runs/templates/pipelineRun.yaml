@@ -1,7 +1,8 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: train-sched-pr-
+  #generateName: train-sched-pr-
+  name: train-sched-pr-0
 spec:
   pipelineRef:
     name: build-and-deploy-pipeline
@@ -16,9 +17,18 @@ spec:
       value: trow.kube-public.svc.cluster.local:8000/thomas/trainsched
     - name: imageTag
       value: "1.0"
+    - name: pathToContext
+      value: "./Dockerfile"     
   # serviceAccountName: pipeline-account
   workspaces:
     - name: git-source
-      emptyDir: {} 
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi    
+      #emptyDir: {} 
       # persistentVolumeClaim:
       #   claimName: trainsched-source-pvc

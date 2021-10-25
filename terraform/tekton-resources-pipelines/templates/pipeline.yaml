@@ -1,5 +1,3 @@
-# REF:https://developer.ibm.com/tutorials/build-and-deploy-a-docker-image-on-kubernetes-using-tekton-pipelines/ 
-
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
@@ -50,9 +48,9 @@ spec:
           workspace: git-source
       params:
         - name: CONTEXT
-          value: $(params.pathToContext)
+          value: "./" #$(params.pathToContext) ##Helm refused validation! Need help!
         - name: IMAGE
-          value: $(params.imageUrl):$(params.imageTag)
+          value: "$(params.imageUrl):$(params.imageTag)"
     # - name: deploy-to-cluster
     #   taskRef:
     #     name: deploy-using-kubectl
@@ -68,3 +66,7 @@ spec:
     #       value: $(params.imageTag)
     #     - name: imageDigest
     #       value: $(tasks.source-to-image.results.IMAGE-DIGEST)
+
+
+# REF:https://developer.ibm.com/tutorials/build-and-deploy-a-docker-image-on-kubernetes-using-tekton-pipelines/ 
+
